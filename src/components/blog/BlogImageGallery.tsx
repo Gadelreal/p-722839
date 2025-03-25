@@ -1,75 +1,41 @@
-import React, { useState } from "react";
+
+import React from "react";
+import { 
+  Carousel, 
+  CarouselContent, 
+  CarouselItem, 
+  CarouselNext, 
+  CarouselPrevious 
+} from "@/components/ui/carousel";
 
 interface BlogImageGalleryProps {
   images: string[];
 }
 
 const BlogImageGallery: React.FC<BlogImageGalleryProps> = ({ images }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const visibleImages = images.slice(currentIndex, currentIndex + 3);
-
-  const handlePrevious = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-    }
-  };
-
-  const handleNext = () => {
-    if (currentIndex < images.length - 3) {
-      setCurrentIndex(currentIndex + 1);
-    }
-  };
+  if (!images.length) return null;
 
   return (
-    <div className="flex w-full max-w-screen-xl flex-col mt-16 pl-8 max-md:max-w-full max-md:mt-10 max-md:pl-5">
-      <div className="flex flex-col items-stretch max-md:max-w-full">
-        <div className="flex gap-8 flex-wrap max-md:max-w-full">
-          {visibleImages.map((image, index) => {
-            // Different aspect ratios for different positions
-            const aspectClass =
-              index === 0
-                ? "aspect-[0.67] w-[480px]"
-                : index === 1
-                  ? "aspect-[1.5] w-[720px]"
-                  : "aspect-[1.5] w-[840px]";
-
-            return (
-              <img
-                key={index}
-                src={image}
-                className={`object-contain min-w-60 shrink-0 ${aspectClass} max-md:max-w-full`}
-                alt={`Gallery image ${index + 1}`}
-              />
-            );
-          })}
+    <div className="flex w-full max-w-screen-xl flex-col mt-16 px-8 max-md:max-w-full max-md:mt-10 max-md:px-5">
+      <Carousel className="w-full">
+        <CarouselContent>
+          {images.map((image, index) => (
+            <CarouselItem key={index} className="flex justify-center md:basis-1/1">
+              <div className="p-1 h-full flex items-center justify-center">
+                <img
+                  src={image}
+                  className="object-cover h-[400px] w-full rounded-xl"
+                  alt={`Gallery image ${index + 1}`}
+                />
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <div className="flex justify-start mt-4">
+          <CarouselPrevious className="relative left-0 right-auto h-14 w-14 rounded-full border border-[#E9EAEB] bg-white hover:bg-gray-50" />
+          <CarouselNext className="relative right-0 left-auto ml-4 h-14 w-14 rounded-full border border-[#E9EAEB] bg-white hover:bg-gray-50" />
         </div>
-        <div className="flex gap-8 mt-8">
-          <button
-            className="justify-center items-center border border-[color:var(--Gray-200,#E9EAEB)] flex min-h-14 gap-3 w-14 h-14 rounded-[28px] border-solid"
-            onClick={handlePrevious}
-            disabled={currentIndex === 0}
-            aria-label="Previous image"
-          >
-            <img
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/7e3e97b064b60d5250c5c3e1c0e4f42ef2d8c8e9?placeholderIfAbsent=true"
-              className="aspect-[1] object-contain w-6 self-stretch my-auto"
-              alt="Previous"
-            />
-          </button>
-          <button
-            className="justify-center items-center border border-[color:var(--Gray-200,#E9EAEB)] flex min-h-14 gap-3 w-14 h-14 rounded-[28px] border-solid"
-            onClick={handleNext}
-            disabled={currentIndex >= images.length - 3}
-            aria-label="Next image"
-          >
-            <img
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/9f9e59236d884a9b0db7d12810fb64478349a72e?placeholderIfAbsent=true"
-              className="aspect-[1] object-contain w-6 self-stretch my-auto"
-              alt="Next"
-            />
-          </button>
-        </div>
-      </div>
+      </Carousel>
     </div>
   );
 };
