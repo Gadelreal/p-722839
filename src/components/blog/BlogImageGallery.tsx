@@ -37,7 +37,7 @@ const BlogImageGallery: React.FC<BlogImageGalleryProps> = ({ images }) => {
   if (!images.length) return null;
 
   return (
-    <div className="flex w-full max-w-screen-xl flex-col mt-16 px-8 max-md:max-w-full max-md:mt-10 max-md:px-5">
+    <div className="flex w-full max-w-screen-xl flex-col mt-16 mx-auto px-8 max-md:max-w-full max-md:mt-10 max-md:px-5">
       <div className="flex flex-col items-stretch max-md:max-w-full">
         <div className="flex gap-4 flex-wrap justify-between max-md:max-w-full">
           {visibleIndexes.map((imgIndex, displayIndex) => {

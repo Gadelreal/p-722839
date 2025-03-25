@@ -1,3 +1,4 @@
+
 import React from "react";
 
 interface BlogHeaderProps {
@@ -13,7 +14,7 @@ const BlogHeader: React.FC<BlogHeaderProps> = ({
 }) => {
   return (
     <div className="items-center bg-white flex w-full flex-col py-24 max-md:max-w-full">
-      <div className="w-full max-w-screen-xl px-8 max-md:max-w-full max-md:px-5">
+      <div className="w-full max-w-screen-xl mx-auto px-8 max-md:max-w-full max-md:px-5">
         <div className="flex w-full flex-col max-md:max-w-full">
           <div className="w-[768px] max-w-screen-md max-md:max-w-full">
             <div className="w-full font-semibold max-md:max-w-full">

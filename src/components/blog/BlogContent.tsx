@@ -1,3 +1,4 @@
+
 import React from "react";
 import BlogQuote from "./BlogQuote";
 import BlogImage from "./BlogImage";
@@ -9,7 +10,7 @@ interface BlogContentProps {
 const BlogContent: React.FC<BlogContentProps> = ({ content }) => {
   return (
     <div className="items-center bg-white flex w-full flex-col pb-24 max-md:max-w-full">
-      <div className="w-full max-w-screen-xl px-8 max-md:max-w-full max-md:px-5">
+      <div className="w-full max-w-screen-xl mx-auto px-8 max-md:max-w-full max-md:px-5">
         <div className="flex w-full flex-col items-center max-md:max-w-full">
           <article className="w-[720px] max-w-[720px] max-md:max-w-full">
             {content}
