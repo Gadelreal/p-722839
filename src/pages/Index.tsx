@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import BlogHeader from "@/components/blog/BlogHeader";
@@ -14,23 +14,19 @@ import RelatedPosts from "@/components/blog/RelatedPosts";
 import CTASection from "@/components/shared/CTASection";
 import NewsletterSection from "@/components/shared/NewsletterSection";
 import Divider from "@/components/shared/Divider";
+import { getBlogData } from "@/services/blogService";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
-  // Blog content
+  // Get blog data from our service
+  const blogData = useMemo(() => getBlogData(), []);
+  
+  // Create blog content from our CMS data
   const blogContent = (
     <>
       <BlogSection title="Introduction">
-        Mi tincidunt elit, id quisque ligula ac diam, amet. Vel etiam
-        suspendisse morbi eleifend faucibus eget vestibulum felis. Dictum quis
-        montes, sit sit. Tellus aliquam enim urna, etiam. Mauris posuere
-        vulputate arcu amet, vitae nisi, tellus tincidunt. At feugiat sapien
-        varius id.
-        <br />
-        Eget quis mi enim, leo lacinia pharetra, semper. Eget in volutpat mollis
-        at volutpat lectus velit, sed auctor. Porttitor fames arcu quis fusce
-        augue enim. Quis at habitant diam at. Suscipit tristique risus, at
-        donec. In turpis vel et quam imperdiet. Ipsum molestie aliquet sodales
-        id est ac volutpat.{" "}
+        {blogData.content}
       </BlogSection>
 
       <div className="w-full text-sm text-[#535862] font-normal leading-none max-md:max-w-full">
@@ -46,12 +42,10 @@ const Index = () => {
 
       <div className="w-full max-md:max-w-full">
         <BlogQuote
-          quote={
-            '"In a world older and more complete than ours they move finished and complete, gifted with extensions of the senses we have lost or never attained, living by voices we shall never hear."'
-          }
-          authorName="Olivia Rhye"
-          authorTitle="Product Designer"
-          authorImage="https://cdn.builder.io/api/v1/image/assets/TEMP/1e63e082976685c4c270ac845a02384064787cea?placeholderIfAbsent=true"
+          quote={blogData.quoteText}
+          authorName={blogData.quoteAuthor}
+          authorTitle={blogData.quoteTitle}
+          authorImage={blogData.quoteImage}
         />
         <div className="flex min-h-12 w-full max-md:max-w-full" />
       </div>
@@ -129,21 +123,8 @@ const Index = () => {
         pellentesque. Arcu ultricies sed mauris vestibulum.
       </div>
 
-      <BlogCallout title="Heading text">
-        Morbi sed imperdiet in ipsum, adipiscing elit dui lectus. Tellus id
-        scelerisque est ultricies ultricies. Duis est sit sed leo nisl, blandit
-        elit sagittis. Quisque tristique consequat quam sed. Nisl at scelerisque
-        amet nulla purus habitasse.
-        <br />
-        Nunc sed faucibus bibendum feugiat sed interdum. Ipsum egestas
-        condimentum mi massa. In tincidunt pharetra consectetur sed duis
-        facilisis metus. Etiam egestas in nec sed et. Quis lobortis at sit
-        dictum eget nibh tortor commodo cursus.
-        <br />
-        Odio felis sagittis, morbi feugiat tortor vitae feugiat fusce aliquet.
-        Nam elementum urna nisi aliquet erat dolor enim. Ornare id morbi eget
-        ipsum. Aliquam senectus neque ut id eget consectetur dictum. Donec
-        posuere pharetra odio consequat scelerisque et, nunc tortor.
+      <BlogCallout title={blogData.calloutTitle}>
+        {blogData.calloutContent}
       </BlogCallout>
     </>
   );
@@ -202,17 +183,30 @@ const Index = () => {
       <div className="w-full max-md:max-w-full">
         <Header />
       </div>
+      
+      {/* Admin Edit Button */}
+      <div className="max-w-screen-xl mx-auto px-8 pt-4">
+        <Link to="/admin">
+          <Button variant="outline" className="flex items-center gap-2">
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11.8536 1.14645C11.6583 0.951184 11.3417 0.951184 11.1465 1.14645L3.71455 8.57836C3.62459 8.66832 3.55263 8.77461 3.50251 8.89155L2.04044 12.303C1.9599 12.491 2.00189 12.709 2.14646 12.8536C2.29103 12.9981 2.50905 13.0401 2.69697 12.9596L6.10847 11.4975C6.2254 11.4474 6.3317 11.3754 6.42166 11.2855L13.8536 3.85355C14.0488 3.65829 14.0488 3.34171 13.8536 3.14645L11.8536 1.14645ZM4.42166 9.28547L11.5 2.20711L12.7929 3.5L5.71455 10.5784L4.21924 11.2192L3.78081 10.7808L4.42166 9.28547Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path>
+            </svg>
+            Edit Content
+          </Button>
+        </Link>
+      </div>
+      
       <div className="bg-white w-full overflow-hidden max-md:max-w-full">
         <BlogHeader
-          date="Published 13 Jan 2025"
-          title="A conversation with Maker & Co."
-          description="Maker & Co. are one of our favorite upcoming interior design studios. We caught up with Jules and Mia at their brand new studio to chat about all things design."
+          date={blogData.date}
+          title={blogData.title}
+          description={blogData.description}
         />
         <BlogImageGallery
           images={[
-            "https://cdn.builder.io/api/v1/image/assets/TEMP/316df20255e7790295fbe557962f2233a27bb506?placeholderIfAbsent=true",
-            "https://cdn.builder.io/api/v1/image/assets/TEMP/31ee63fcfbbd116ba010b921f2f83a14be50aa35?placeholderIfAbsent=true",
-            "https://cdn.builder.io/api/v1/image/assets/TEMP/8a43d277787f7ad6b4ecac5e8c5bdf0bf86ae0f1?placeholderIfAbsent=true",
+            blogData.mainImage1,
+            blogData.mainImage2,
+            blogData.mainImage3,
           ]}
         />
         <BlogContent content={blogContent} />
